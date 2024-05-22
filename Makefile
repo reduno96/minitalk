@@ -1,8 +1,8 @@
 SRCM= ./client.c \
 	./server.c \
 
-OBJM= ${SRCM=.c:.o}
-
+OBJM= ${SRCM:.c=.o}
+# OBJSM=${SRCM:.c=.o}
 CC= cc
 CFLAGS= -Wall -Wextra -Werror
 CNAME= client
@@ -13,23 +13,29 @@ FLDPRINTF= ./printf
 
 LIBFT= ./libft/libft.a
 FLDLIBFT= ./libft
-# # LIBC= ar rcs
 
-# # all:  ${CNAME}
 
-# %.o: %.c
-# 	$(CC) $(CFLAGS) -c $< -o $@
+all: ${LIBFT} ${OBJM} ${CNAME} ${SNAME}
 
-# # ${CNAME}: ${OBJM}
-# # 	${LIBC} ${NAME} ${OBJM}
-
-all:  ${CNAME}
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 ${CNAME}: ${OBJM}
-	${CC} ${CFLAGS} ${LIBPRINT} ${LIBFT} ${SRCM}
+	${CC} ${CFLAGS} ${LIBPRINT} ${LIBFT} client.c -o ${CNAME}
+
+${SNAME}: ${OBJM}
+	${CC} ${CFLAGS} ${LIBPRINT} ${LIBFT} server.c -o ${SNAME}
+
 
 ${LIBPRINT}:
-	@make -c FLDPRINTF
+	@make -C ${FLDPRINTF}
 
 ${LIBFT}:
-	@make -c ${FLDLIBFT}
+	@make -C ${FLDLIBFT}
+
+clean:
+	make fclean -C ${FLDLIBFT}
+	rm -rf ${OBJM}
+
+fclean: clean
+	rm -rf ${CNAME} ${SNAME}
