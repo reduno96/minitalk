@@ -2,7 +2,7 @@ SRCM= ./client.c \
 	./server.c \
 
 OBJM= ${SRCM:.c=.o}
-# OBJSM=${SRCM:.c=.o}
+
 CC= cc
 CFLAGS= -Wall -Wextra -Werror
 CNAME= client
@@ -15,7 +15,7 @@ LIBFT= ./libft/libft.a
 FLDLIBFT= ./libft
 
 
-all: ${LIBFT} ${OBJM} ${CNAME} ${SNAME}
+all: ${LIBFT} ${LIBPRINT} ${OBJM} ${CNAME} ${SNAME}
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -34,6 +34,7 @@ ${LIBFT}:
 	@make -C ${FLDLIBFT}
 
 clean:
+	make fclean -C ${FLDPRINTF}
 	make fclean -C ${FLDLIBFT}
 	rm -rf ${OBJM}
 
