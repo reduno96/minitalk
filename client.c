@@ -6,7 +6,7 @@
 /*   By: rel-mora <rel-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:04:57 by rel-mora          #+#    #+#             */
-/*   Updated: 2024/05/23 15:15:30 by rel-mora         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:55:37 by rel-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	ft_send_char(char *av, int pid)
 	int	i;
 	int	j;
 
-	i = 7;
 	j = 0;
 	while (av[j])
 	{
+		i = 7;
 		while (i >= 0)
 		{
 			if (av[j] >> i & 1)
@@ -58,31 +58,14 @@ void	ft_send_char(char *av, int pid)
 	}
 }
 
-void	ft_send_len(int pid, int len)
-{
-	int	i;
-
-	i = 31;
-	while (len >= 0)
-	{
-		if (len >> i & 1)
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		i--;
-		usleep(200);
-	}
-}
-
 int	main(int ac, char **av)
 {
 	int	pid;
 	int	len;
 
-	len = ft_strlen(av[1]);
 	ft_handle_enter(ac, av);
+	len = ft_strlen(av[2]);
 	pid = ft_atoi(av[1]);
-	ft_send_len(pid, len);
 	ft_send_char(av[2], pid);
 	return (0);
 }
