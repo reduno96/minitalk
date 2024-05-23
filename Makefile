@@ -17,13 +17,13 @@ FLDLIBFT= ./libft
 
 all: ${LIBFT} ${LIBPRINT} ${OBJM} ${CNAME} ${SNAME}
 
-%.o: %.c
+%.o: %.c minitalk.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-${CNAME}: ${OBJM}
+${CNAME}: ${OBJM} minitalk.h
 	${CC} ${CFLAGS} ${LIBPRINT} ${LIBFT} client.c -o ${CNAME}
 
-${SNAME}: ${OBJM}
+${SNAME}: ${OBJM} minitalk.h
 	${CC} ${CFLAGS} ${LIBPRINT} ${LIBFT} server.c -o ${SNAME}
 
 
@@ -40,3 +40,5 @@ clean:
 
 fclean: clean
 	rm -rf ${CNAME} ${SNAME}
+
+.PHONY: all clean fclean re
